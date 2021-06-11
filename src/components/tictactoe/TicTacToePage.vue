@@ -1,6 +1,6 @@
 <template>
   <div class="tictactoe-wrapper">
-    <h1>Tic-<span class="tac">Tac</span>-Toe</h1>
+    <h1 class="header">Tic-<span class="tac">Tac</span>-Toe</h1>
     <span
       >Current Player:
       <i v-if="player === 'x'" class="fas fa-times" />
@@ -128,6 +128,10 @@ html {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -0);
+}
+
+.header {
+    font-size: 2.5rem;
 }
 
 table {
