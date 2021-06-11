@@ -23,7 +23,7 @@ html {
 }
 
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'montserrat' sans-serif;
 }
 
 </style>
