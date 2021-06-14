@@ -1,10 +1,10 @@
 <template>
   <div class="calc-container">
     <div class="calc-header">
-        <div class="equation">
-            <span class="expression">{{ expression }}</span>
-            <input v-model="input">
-        </div>
+      <div class="equation">
+        <span class="expression">{{ expression }}</span>
+        <input v-model="input" />
+      </div>
     </div>
     <div class="calc-buttons">
       <div class="btn"><CalcButton @clicked="clicked" :value="'7'" /></div>
@@ -21,10 +21,14 @@
       <div class="btn"><CalcButton @clicked="clicked" :value="'-'" /></div>
       <div class="btn"><CalcButton @clicked="clicked" :value="'.'" /></div>
       <div class="btn"><CalcButton @clicked="clicked" :value="'0'" /></div>
-      <div class="btn"><CalcButton @clicked="clicked" :value="'x'" /></div>
+      <div class="btn"><CalcButton @clicked="clicked" :value="'±'" /></div>
       <div class="btn"><CalcButton @clicked="clicked" :value="'+'" /></div>
-      <div class="btn btn-w2"><CalcButton @clicked="clicked" :value="'C'" /></div>
-      <div class="btn btn-w2"><CalcButton @clicked="clicked" :value="'='" /></div>
+      <div class="btn btn-w2">
+        <CalcButton @clicked="clicked" :value="'C'" />
+      </div>
+      <div class="btn btn-w2">
+        <CalcButton @clicked="clicked" :value="'='" />
+      </div>
     </div>
   </div>
 </template>
@@ -38,24 +42,67 @@ export default {
   },
   data() {
     return {
-        expression: '',
-        input: ''
+      expression: '',
+      currentNumber: '',
+      lastNumber: '',
+      currentOperator: '',
+      input: '',
     };
   },
   methods: {
-      clicked(value) {
-          if (value === 'C') {
-              this.input = '';
-              this.expression = '';
-          } else if (value === '=') {
-              this.input = eval(this.expression);
-              this.expression = '';
-          } else if (value === '+' | value === '-' || value === '/' | value === 'x') {
-              this.input = this.expression != '' ? eval(this.expression) : this.input;
-              this.expression += this.input + value;
-          } else {
-              this.input = value;
+    clicked(value) {
+      if (value === "C") {
+        this.expression = '';
+        this.currentOperator = '';
+        this.lastNumber = '';
+        this.currentNumber = '';
+        this.currentOperator = '';
+        this.input = '';
+        return;
+      } else if (value === '±') {
+        this.input = -this.input;
+      } else if (this.isOperator(value)) {
+        console.log("op");
+        if (this.isOperator(this.lastInput) && this.currentNumber === '') {
+          console.log("change op");
+          this.expression = this.expression.substring(0, this.expression.length -1) + value;
+        } else {
+          var operator = this.currentOperator;
+          if (operator === 'x') {
+            operator = '*';
           }
+          if (operator === '÷') {
+            operator = '/';
+          }
+          this.expression += this.input + value;
+          if (this.currentNumber != '' && this.lastNumber != '') {
+            this.input = eval(this.lastNumber + operator + this.currentNumber)
+          }
+        }
+        this.lastNumber = this.input;
+        this.currentNumber = '';
+        this.currentOperator = value;
+        if (value === '=') {
+          this.expression = '';
+          this.currentOperator = '';
+        }
+      } else {
+        console.log("num");
+        if (this.currentNumber === '') {
+          this.input = value;
+        } else {
+          this.input += value;
+        }
+        this.currentNumber = this.input;
+      } 
+    },
+    isOperator(input) {
+      return input === "+" || input === "-" || input === "÷" || input === "x" || input === '=';
+    },
+  },
+  computed: {
+    lastInput: function () {
+      return this.expression[this.expression.length -1];
     }
   }
 };
@@ -87,18 +134,18 @@ export default {
 }
 
 .expression {
-    color: rgb(116, 116, 116);
+  color: rgb(116, 116, 116);
 }
 
 .equation input {
-    border: none;
-    text-align: right;
-    width: 100%;
-    height: 60%;
-    font-size: 3rem;
-    font-weight: 500;
-    letter-spacing: 0.1rem;
-    bottom: 0;
+  border: none;
+  text-align: right;
+  width: 100%;
+  height: 60%;
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  bottom: 0;
 }
 
 .calc-buttons {
@@ -117,7 +164,7 @@ export default {
 }
 
 .btn-w2 {
-    width:50%;
-    height:20%;
+  width: 50%;
+  height: 20%;
 }
 </style>
