@@ -17,13 +17,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
-html {
-  background-color: #b6b6b6;
-}
-
-* {
-  font-family: 'montserrat' sans-serif;
-}
-
 </style>

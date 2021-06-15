@@ -146,6 +146,7 @@ export default {
   font-weight: 500;
   letter-spacing: 0.1rem;
   bottom: 0;
+  outline: none;
 }
 
 .calc-buttons {

@@ -1,27 +1,29 @@
 <template>
-  <div class="tictactoe-wrapper">
-    <h1 class="header">Tic-<span class="tac">Tac</span>-Toe</h1>
-    <span
-      >Current Player:
-      <i v-if="player === 'x'" class="fas fa-times" />
-      <i v-if="player === 'o'" class="far fa-circle" />
-    </span>
-    <table ellspaing="0">
-      <tr v-for="(n, i) in 3" :key="i">
-        <td v-for="(n, j) in 3" :key="j">
-          <Field @toggled="toggled(i, j)" :player="board[i][j]" />
-        </td>
-      </tr>
-    </table>
-    <div class="winner-wrapper">
-      <div v-if="winner !== ''" class="winner-box">
-        <h1 v-if="winner !== 'draw'">
-          The winner is
-          <i v-if="player === 'x'" class="fas fa-times" />
-          <i v-if="player === 'o'" class="far fa-circle" />
-        </h1>
-        <h1 v-else>It's a draw!</h1>
-        <button class="btn-replay" @click="restart">Replay</button>
+  <div class="container">
+    <div class="tictactoe-wrapper">
+      <h1 class="header">Tic-<span class="tac">Tac</span>-Toe</h1>
+      <span
+        >Current Player:
+        <i v-if="player === 'x'" class="fas fa-times" />
+        <i v-if="player === 'o'" class="far fa-circle" />
+      </span>
+      <table ellspaing="0">
+        <tr v-for="(n, i) in 3" :key="i">
+          <td v-for="(n, j) in 3" :key="j">
+            <Field @toggled="toggled(i, j)" :player="board[i][j]" />
+          </td>
+        </tr>
+      </table>
+      <div class="winner-wrapper">
+        <div v-if="winner !== ''" class="winner-box">
+          <h1 v-if="winner !== 'draw'">
+            The winner is
+            <i v-if="player === 'x'" class="fas fa-times" />
+            <i v-if="player === 'o'" class="far fa-circle" />
+          </h1>
+          <h1 v-else>It's a draw!</h1>
+          <button class="btn-replay" @click="restart">Replay</button>
+        </div>
       </div>
     </div>
   </div>
@@ -115,14 +117,17 @@ export default {
 };
 </script>
 
-<style>
-html {
-  background-color: #343535;
-  font-family: Arial, Helvetica, sans-serif;
-}
-</style>
+
 
 <style scoped>
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #343535;
+}
 .tictactoe-wrapper {
   color: #fff;
   position: absolute;
@@ -131,7 +136,7 @@ html {
 }
 
 .header {
-    font-size: 2.5rem;
+  font-size: 2.5rem;
 }
 
 table {
@@ -157,20 +162,20 @@ tr {
 }
 
 .btn-replay {
-    color: #fff;
-    background-color: #ffb703;
-    border: none;
-    padding: 10px;
-    font-size: 2rem;
-    font-weight: 800;
-    cursor: pointer;
+  color: #fff;
+  background-color: #ffb703;
+  border: none;
+  padding: 10px;
+  font-size: 2rem;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.btn-replay:hover{
-    transform: scale(1.1);
+.btn-replay:hover {
+  transform: scale(1.1);
 }
 
 .btn-replay:active {
-    transform: scale(1.0);
+  transform: scale(1);
 }
 </style>
